@@ -1,9 +1,11 @@
 package com.shoppi.bmicalculator
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,8 +18,19 @@ class MainActivity : AppCompatActivity() {
         val confirmButton = findViewById<Button>(R.id.bt_confirm)
 
         confirmButton.setOnClickListener {
+
+            if (heightEditText.text.isEmpty() || weightEditText.text.isEmpty()) {
+                Toast.makeText(this,"빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val height: Int = heightEditText.text.toString().toInt()
             val weight: Int = weightEditText.text.toString().toInt()
+
+            intent.putExtra("height", height)
+            intent.putExtra("weight", weight)
+
+            startActivity(Intent(this, ResultActivity::class.java))
+
         }
     }
-}1
+}
